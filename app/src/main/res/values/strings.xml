@@ -6,4 +6,7 @@
     <string name="base">Base</string>
     <string name="base_amount">Base Amount</string>
     <string name="made_by_bhagyaraj">Made with ❤️ by Bhagyaraj</string>
+    <string name="splitted_amounts">Splitted Amounts :</string>
+    <string name="enter_number_of_people">Enter Number Of People</string>
+    <string name="split_bill">Split Bill</string>
 </resources>

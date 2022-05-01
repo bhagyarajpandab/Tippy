@@ -116,4 +116,68 @@
         app:layout_constraintTop_toBottomOf="@+id/tipSeekBar"
         tools:text="Good" />
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="409dp"
+        android:layout_height="1dp"
+        android:background="?android:attr/listDivider"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvSplitHeading"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="35dp"
+        android:text="@string/split_bill"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/divider" />
+
+    <TextView
+        android:id="@+id/tvSplitNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:text="@string/enter_number_of_people"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvSplitHeading" />
+
+    <EditText
+        android:id="@+id/etSplitPeople"
+        android:layout_width="80sp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="48dp"
+        android:ems="10"
+        android:inputType="numberSigned"
+        app:layout_constraintBottom_toBottomOf="@+id/tvSplitNumber"
+        app:layout_constraintStart_toEndOf="@+id/tvSplitNumber"
+        app:layout_constraintTop_toTopOf="@+id/tvSplitNumber" />
+
+    <TextView
+        android:id="@+id/tvAmountForEach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:text="@string/splitted_amounts"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintEnd_toEndOf="@+id/tvSplitNumber"
+        app:layout_constraintTop_toBottomOf="@+id/tvSplitNumber" />
+
+    <TextView
+        android:id="@+id/tvSplitValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        app:layout_constraintBottom_toBottomOf="@+id/tvAmountForEach"
+        app:layout_constraintEnd_toEndOf="@+id/etSplitPeople"
+        app:layout_constraintTop_toTopOf="@+id/tvAmountForEach"
+        tools:text="20" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
