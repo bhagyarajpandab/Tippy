@@ -1,6 +1,11 @@
 package com.example.tippy
 
 import android.animation.ArgbEvaluator
+import android.annotation.SuppressLint
+import android.content.ClipData
+import android.content.ClipboardManager
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -8,9 +13,11 @@ import android.util.Log
 import android.widget.EditText
 import android.widget.SeekBar
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.example.tippy.databinding.ActivityMainBinding
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 import kotlin.math.ceil
 
 private const val TAG = "MainActivity"
@@ -27,7 +34,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var tvTipDescripton: TextView
     private lateinit var etSplitPeople: EditText
     private lateinit var tvSplitValue: TextView
+    private lateinit var copyButton: FloatingActionButton
+    private lateinit var shareButton: FloatingActionButton
 
+    @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -41,16 +51,18 @@ class MainActivity : AppCompatActivity() {
         tvTipDescripton = binding.tvTipDescripton
         etSplitPeople = binding.etSplitPeople
         tvSplitValue = binding.tvSplitValue
+        copyButton = binding.copyButton
+        shareButton = binding.shareButton
 
         tipSeekBar.progress = INIT_TIP_PERCENT
-        tvPercentLabel.text = "$INIT_TIP_PERCENT"
+        tvPercentLabel.text = "$INIT_TIP_PERCENT %"
 
         updateTipDescription(INIT_TIP_PERCENT)
 
         tipSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 Log.i(TAG, "onProgressChanged $progress")
-                tvPercentLabel.text = "$progress"
+                tvPercentLabel.text = "$progress %"
                 computeTipAndTotal()
                 updateTipDescription(progress)
             }
@@ -84,6 +96,23 @@ class MainActivity : AppCompatActivity() {
             }
 
         })
+
+        copyButton.setOnClickListener {
+            val textToCopy = generateTextToCopy()
+            val clipboardManager = getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
+            val clipData = ClipData.newPlainText("text", textToCopy)
+            clipboardManager.setPrimaryClip(clipData)
+
+            Toast.makeText(this, "Copied $textToCopy", Toast.LENGTH_LONG).show()
+        }
+        shareButton.setOnClickListener {
+            val textToCopy = generateTextToCopy()
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, textToCopy)
+            intent.type = "text/plain"
+            startActivity(Intent.createChooser(intent, "Share To:"))
+        }
 
     }
 
@@ -133,5 +162,16 @@ class MainActivity : AppCompatActivity() {
         tvTotalAmount.text = formatter.format(totalAmount)
         if (etSplitPeople.text.isNotEmpty())
             computeSplit()
+    }
+
+    private fun generateTextToCopy(): CharSequence? {
+        var textToCopy = "Total 0.00 = Base 0.00 + Tip 0.00"
+        if (tvSplitValue.text.isNotEmpty())
+            textToCopy =
+                "Total ${tvTotalAmount.text} = Base ${etBaseAmount.text} + Tip ${tvTipAmount.text}  •  Per Person ${tvSplitValue.text}"
+        else if (tvTotalAmount.text.isNotEmpty())
+            textToCopy =
+                "Total ${tvTotalAmount.text} = Base ${etBaseAmount.text} + Tip ${tvTipAmount.text}"
+        return textToCopy
     }
 }

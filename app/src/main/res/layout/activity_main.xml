@@ -124,7 +124,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.42" />
 
     <TextView
         android:id="@+id/tvSplitHeading"
@@ -179,5 +180,30 @@
         app:layout_constraintEnd_toEndOf="@+id/etSplitPeople"
         app:layout_constraintTop_toTopOf="@+id/tvAmountForEach"
         tools:text="20" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/shareButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="100dp"
+        android:layout_marginTop="48dp"
+        android:clickable="true"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvAmountForEach"
+        app:srcCompat="@android:drawable/ic_menu_share"
+        android:contentDescription="Copy button" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/copyButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="100dp"
+        android:clickable="true"
+        android:contentDescription="Share Button"
+        app:layout_constraintBottom_toBottomOf="@+id/shareButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/shareButton"
+        app:layout_constraintVertical_bias="0.0"
+        app:srcCompat="?attr/actionModeCopyDrawable" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
